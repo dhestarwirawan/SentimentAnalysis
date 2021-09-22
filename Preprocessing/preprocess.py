@@ -8,7 +8,7 @@ import emoji
 from googletrans import Translator
 from langdetect import detect
 
-file = open("combined_slang_words.txt")
+file = open("./combined_slang_words.txt")
 content = file.read()
 dicti = ast.literal_eval(content)
 slang = pd.DataFrame(dicti.items(),columns=['original','replacement'])
