@@ -53,7 +53,7 @@ def find_en(row, ignore_indexes):
         result = 'has en'
   elif row.name in ignore_indexes:
       result = 'no en'
-  elif detect(row['content']).lang == 'en':
+  elif detect(row['content']) == 'en':
       result = 'has en'
   else:
       result = 'no en'
