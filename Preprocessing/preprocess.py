@@ -49,7 +49,9 @@ def trans_to_id(text):
 
 def find_en(row, ignore_indexes):
   result = 'no en'
-  if row.name in ignore_indexes:
+  if re.findall(':[a-zA-Z_]+:', row.review_text):
+        result = 'has en'
+  elif row.name in ignore_indexes:
       result = 'no en'
   elif detect(row['content']).lang == 'en':
       result = 'has en'
