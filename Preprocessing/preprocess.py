@@ -7,6 +7,7 @@ from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFacto
 import emoji
 from googletrans import Translator
 from langdetect import detect
+from tqdm.auto import tqdm
 
 file = open("SentimentAnalysis/Preprocessing/combined_slang_words.txt")
 content = file.read()
@@ -79,13 +80,14 @@ def clean(text):
 def translate(df):
   df_cp = df.copy()
   # Find missing index
+  tqdm.pandas()
   df_empty_idx = df_cp['content'].loc[(df_cp['content']=='')|(df_cp['content']==' ')].index
-  df_en_res = df_cp.apply(find_en, args=(df_empty_idx,), axis=1)
+  df_en_res = df_cp.progress_apply(find_en, args=(df_empty_idx,), axis=1)
   df_has_en_mask = (df_en_res == 'has en')
   ### final english indexes
   df_has_en_ix = [i for i,j in enumerate(df_has_en_mask) if j]
   # translate rows that has english (trans_to_id)
-  df_en_translated = df_cp['content'].loc[df_has_en_mask].map(trans_to_id)
+  df_en_translated = df_cp['content'].loc[df_has_en_mask].progress_map(trans_to_id)
   # combine translated rows with initial dataframe
   df_cp['content'].loc[df_has_en_ix] = df_en_translated
   return df_cp
