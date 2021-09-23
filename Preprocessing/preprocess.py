@@ -29,7 +29,7 @@ def filters(text):
 
 def remove_emoji(text):
   new_text = emoji.demojize(text)
-  new_text = re.sub('[ ]+',' ',text)
+  new_text = re.sub('[ ]+',' ',new_text)
   return new_text
 
 def remove_nonalphanumeric(text):
@@ -37,7 +37,7 @@ def remove_nonalphanumeric(text):
   # remove 2 letter word, \n \t \xe
   shortword = re.compile(r'\W*\b\w{1,2}\b')
   new_text = re.sub(shortword, '', new_text)
-  new_text = re.sub('[ ]+',' ',text)
+  new_text = re.sub('[ ]+',' ',new_text)
   return new_text
 
 def remove_repeated_char(text):
